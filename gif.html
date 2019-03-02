@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- Link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- AND/OR YOUR OWN CSS -->
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+
+</head>
+
+<body>
+    <!-- HTML start here! -->
+    <div class="button-view">
+    </div>
+    <div class="image-view"></div>
+
+    <label for="input">Add:</label>
+    <input class="input" type="text">
+    <input class="add-char" type="submit" value="Add New Character">
+
+
+    <!-- HTML end here! -->
+
+
+    <!-- Link to your JavaScript -->
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
+    <script>
+        var query = "funny cat"
+        var apiKey = "Khll4GtC4J8q6tXZl96C97GzmgOPgSiv"
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + query + "&api_key=" + apiKey;
+
+        var char = ["Ironman", "Captain America", "Spiderman"];
+
+        ///////////////////////////
+        //Global function call
+        renderButtons();
+        ////////////////////////
+
+        function renderButtons() {
+
+            // Deleting the character buttons prior to adding new buttons
+            // (this is necessary otherwise we will have repeat buttons)
+            $(".button-view").empty();
+
+            // Looping through the array of movies
+            for (var i = 0; i < char.length; i++) {
+
+                // Then dynamicaly generating buttons for each movie in the array.
+                // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
+                var button = $("<button>");
+                // buttondding button class
+                button.addClass("character");
+                // Adding a data-attribute with a value of the movie at index i
+                button.attr("data-name", char[i]);
+                // Providing the button's text with a value of the movie at index i
+                button.text(char[i]);
+                // Adding the button to the HTML
+                $(".button-view").append(button);
+            }
+        }
+
+        // This function handles events where one button is clicked
+        $(".add-char").on("click", function (event) {
+            // event.preventDefault() prevents the form from trying to submit itself.
+            // We're using a form so that the user can hit enter instead of clicking the button if they want
+            event.preventDefault();
+
+            // This line will grab the text from the input box
+            var currentButton = $(".input").val().trim();
+            // The character from the textbox is then added to our array
+            char.push(currentButton);
+
+            // calling renderButtons which handles the processing of our movie array
+            renderButtons();
+        });
+
+        $(".character").on("click", function (event) {
+            var currentChar = $(this).attr("data-name");
+            console.log(currentChar);
+        // $.ajax({
+        //     url: queryURL,
+        //     method: "GET"
+        // }).then(updatePage);
+
+        // function updatePage(response) {
+        //     console.log(response);
+        // }
+        });
+    </script>
+</body>
+
+</html>
