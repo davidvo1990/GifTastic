@@ -31,6 +31,10 @@ body {
     overflow: auto;
 }
 
+.movie {
+  color: darkgray
+}
+
 .btn:hover{
     background-color: purple;
     animation: color_change 2s;
@@ -64,4 +68,28 @@ body {
     50%  {background: blue;}
     75%  {background: green;}
     100% {background: red;}
+  }
+
+  body {
+    animation: bodycolor 50s; /* animation-name followed by duration in seconds*/
+       /* you could also use milliseconds (ms) or something like 2.5s */
+    -webkit-animation: bodycolor 50s; /* Chrome and Safari */
+  }
+
+  @keyframes bodycolor
+  {
+    0%   {background: lightslategray;}
+    25%  {background: lightcyan;}
+    50%  {background: lightsalmon;}
+    75%  {background: lightseagreen;}
+    100% {background: lightslategray;}
+  }
+
+  @-webkit-keyframes bodycolor /* Safari and Chrome - necessary duplicate */
+  {
+    0%   {background: lightslategray;}
+    25%  {background: lightcyan;}
+    50%  {background: lightsalmon;}
+    75%  {background: lightseagreen;}
+    100% {background: lightslategray;}
   }

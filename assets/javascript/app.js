@@ -11,7 +11,8 @@ var limit;
 ///////////////////////////
 //Global function call
 renderButtons();
-animateImage()
+animateImage();
+downloadImage();
 ////////////////////////
 
 function renderButtons() {
@@ -74,6 +75,37 @@ $(document).on("click", ".character", function (event) {
         url: queryURL,
         method: "GET"
     }).then(updatePage);
+
+    var movieKey = "5195b749"
+    var movieURL = "https://www.omdbapi.com/?t=" + currentChar + "&y=&plot=short&apikey=" + movieKey;
+
+    $.ajax({
+        url: movieURL,
+        method: "GET"
+    }).then(function (response) {
+
+        console.log(response);
+        var title = response.Title;
+        var rating = response.Ratings[0].Value;
+        var actor = response.Actors;
+        var rated = response.Rated;
+        var poster = response.Poster;
+        var titleDiv = $("<div>Title: <span>"+title+"</span></div>");
+        var ratingDiv = $("<div>Rating: <span>"+rating+"</span></div>");
+        var actorDiv = $("<div>Actor: <span>"+actor+"</span></div>");
+        var ratedDiv = $("<div>Rated: <span>"+rated+"</span></div>");
+        var imgDiv = $("<div><img src='"+poster+"'></div>");
+        console.log(title);
+        console.log(rating);
+        console.log(actor);
+        console.log(rated);
+        console.log(poster);
+
+        $(".movie-box").html(titleDiv).append(ratedDiv).append(ratingDiv).append(actorDiv).append(imgDiv);
+    });
+
+
+
     //END on click
 });
 
@@ -89,10 +121,15 @@ $(document).on("click", ".more-image", function (event) {
     }).then(updatePage);
     //END on click
 })
-var url;
-var fileName;
+
+//function allow download on click download button
 function downloadImage() {
-    $(document).on("click", ".download", function (event) {
+    $(document).on("click",".download" ,function () {
+        // forceDownload(url, fileName);
+        var url = $(this).parent().find(".imageDiv").find(".gif").attr("data-animate");
+        var fileName = $(this).parent().find(".title").attr("imgtitle");
+        console.log("Link to download: " + url);
+        console.log("File name to download: " + fileName);
         forceDownload(url, fileName);
     })
 }
@@ -108,11 +145,11 @@ function updatePage(response) {
         img.attr("data-still", datas[i].images.fixed_height_small_still.url)
         img.attr("data-animate", datas[i].images.fixed_height_small.url)
         img.attr("data-state", "still");
-        var imageDiv = $("<div>")
+        var imageDiv = $("<div class='imageDiv'></div>")
         imageDiv.html(img);
 
-        var rating = $("<div>Rating: <span>" + datas[i].rating + "</span></div>");
-        var title = $("<div>Topic: <span>" + datas[i].title + "</span></div>");
+        var rating = $("<div class='rating'>Rating: <span>" + datas[i].rating + "</span></div>");
+        var title = $("<div class='title' imgtitle='" + datas[i].title + "'>Topic: <span >" + datas[i].title + "</span></div>");
         // var source = $("<div>Source: <span>"+datas[i].source+"</span></div>");
         var import_datetime = $("<div>Import date: <span>" + datas[i].import_datetime + "</span></div>");
         //var download = $("<a href=" + datas[i].images.fixed_height_small.url + " download><button class='bnt'>Download!</button></a>")
@@ -121,7 +158,7 @@ function updatePage(response) {
         var favorite = $("<button class='btn favorite text-light'>Favorite</button>")
         url = datas[i].images.fixed_height_small.url;
         fileName = datas[i].title;
-        downloadImage();
+        
 
 
 
@@ -134,6 +171,7 @@ function updatePage(response) {
     //END updatePage()
 };
 
+//add favorite
 $(document).on("click", ".favorite", function () {
     $(".favorite-box").html($(this).parent());
     console.log($(this).parent())
