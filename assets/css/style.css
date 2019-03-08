@@ -30,22 +30,23 @@ body {
 .image-view {
     overflow: auto;
 }
-
+/* for movie API */
 .movie {
-  color: darkgray
+  color: purple
 }
-
+/* button stuff */
 .btn:hover{
     background-color: purple;
     animation: color_change 2s;
 }
+
 
 .btn{
     background-color:orange;
 }
 
 
-
+/* change color over time for button */
   .btn {
     animation: colorchange 50s; /* animation-name followed by duration in seconds*/
        /* you could also use milliseconds (ms) or something like 2.5s */
@@ -69,7 +70,7 @@ body {
     75%  {background: green;}
     100% {background: red;}
   }
-
+/* change color over time for body background */
   body {
     animation: bodycolor 50s; /* animation-name followed by duration in seconds*/
        /* you could also use milliseconds (ms) or something like 2.5s */

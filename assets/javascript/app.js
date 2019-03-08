@@ -60,7 +60,7 @@ $(".add-char").on("click", function (event) {
 //function to add image when click character button
 $(document).on("click", ".character", function (event) {
     $(".image-view").empty();
-
+    //API for giphy
     var moreImage = $("<button class='btn text-light more-image'>Add more!</button>")
     $(".extra").html(moreImage);
 
@@ -76,6 +76,7 @@ $(document).on("click", ".character", function (event) {
         method: "GET"
     }).then(updatePage);
 
+    //second API for movie 
     var movieKey = "5195b749"
     var movieURL = "https://www.omdbapi.com/?t=" + currentChar + "&y=&plot=short&apikey=" + movieKey;
 
@@ -90,11 +91,11 @@ $(document).on("click", ".character", function (event) {
         var actor = response.Actors;
         var rated = response.Rated;
         var poster = response.Poster;
-        var titleDiv = $("<div>Title: <span>"+title+"</span></div>");
-        var ratingDiv = $("<div>Rating: <span>"+rating+"</span></div>");
-        var actorDiv = $("<div>Actor: <span>"+actor+"</span></div>");
-        var ratedDiv = $("<div>Rated: <span>"+rated+"</span></div>");
-        var imgDiv = $("<div><img src='"+poster+"'></div>");
+        var titleDiv = $("<div>Title: <span>" + title + "</span></div>");
+        var ratingDiv = $("<div>Rating: <span>" + rating + "</span></div>");
+        var actorDiv = $("<div>Actor: <span>" + actor + "</span></div>");
+        var ratedDiv = $("<div>Rated: <span>" + rated + "</span></div>");
+        var imgDiv = $("<div><img src='" + poster + "'></div>");
         console.log(title);
         console.log(rating);
         console.log(actor);
@@ -124,7 +125,7 @@ $(document).on("click", ".more-image", function (event) {
 
 //function allow download on click download button
 function downloadImage() {
-    $(document).on("click",".download" ,function () {
+    $(document).on("click", ".download", function () {
         // forceDownload(url, fileName);
         var url = $(this).parent().find(".imageDiv").find(".gif").attr("data-animate");
         var fileName = $(this).parent().find(".title").attr("imgtitle");
@@ -133,7 +134,7 @@ function downloadImage() {
         forceDownload(url, fileName);
     })
 }
-
+//function for giphy ajax
 function updatePage(response) {
     console.log(response);
     var datas = response.data;
@@ -158,7 +159,7 @@ function updatePage(response) {
         var favorite = $("<button class='btn favorite text-light'>Favorite</button>")
         url = datas[i].images.fixed_height_small.url;
         fileName = datas[i].title;
-        
+
 
 
 
@@ -171,7 +172,7 @@ function updatePage(response) {
     //END updatePage()
 };
 
-//add favorite
+//add favorite and more favorite item to the favorite box
 $(document).on("click", ".favorite", function () {
     $(".favorite-box").html($(this).parent());
     console.log($(this).parent())
@@ -201,7 +202,7 @@ function forceDownload(url, fileName) {
 }
 
 
-
+//this is for the still and animate image when click
 function animateImage() {
     $(document).on("click", ".gif", function () {
         var state = $(this).attr("data-state");
